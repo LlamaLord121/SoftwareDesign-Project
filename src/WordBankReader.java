@@ -13,61 +13,67 @@ import java.util.Random;
 
 public class WordBankReader {
     public static String getWord(int letterCount) {
-        File wordBank = new File("WordBank.txt");
-        Scanner scanner = new Scanner(wordBank);
-        
-        String lengthHeader = "-" + letterCount;
-        boolean foundHeader = false;
-        int wordCount = 0;
-        
-        while(scanner.hasNextLine()) {
-            String currentLine = scanner.nextLine();
-            
-            if (currentLine.startsWith("-")) {
-                if(foundHeader) {
-                    break;
-                } else if (currentLine.equals(lengthHeader)) {
-                    foundHeader = true;
-                }
-            } else if (foundHeader && !currentLine.trim().isEmpty()) {
-                wordCount += 1; // Starts counting length to next section
-            }
-        }
+        try { // Opening a file with scanner, wrapping it in a basic try/except block.
+            File wordBank = new File("WordBank.txt");
+            Scanner scanner = new Scanner(wordBank);
 
-        scanner.close();
+            String lengthHeader = "-" + letterCount;
+            boolean foundHeader = false;
+            int wordCount = 0;
 
-        if (wordCount == 0) {
-            return null; // Base case
-        }
+            while(scanner.hasNextLine()) {
+                String currentLine = scanner.nextLine();
 
-        Random random = new Random();
-        int randomWord = random.nextInt(wordCount);
-
-        scanner =  new Scanner(wordBank);
-        foundHeader = false;
-        int currentIndex = 0;
-
-        while (scanner.hasNextLine()) {
-            String line = scanner.nextLine();
-
-            if (line.startsWith("-")) {
-                if (foundHeader) {
-                    break;
-                }
-                if (line.equals(lengthHeader)) {
-                    foundHeader = true;
+                if (currentLine.startsWith("-")) {
+                    if(foundHeader) {
+                        break;
+                    } else if (currentLine.equals(lengthHeader)) {
+                        foundHeader = true;
+                    }
+                } else if (foundHeader && !currentLine.trim().isEmpty()) {
+                    wordCount += 1;
                 }
             }
-            else if (foundHeader && !line.trim().isEmpty()) {
-                if (currentIndex == randomWord) {
-                    scanner.close();
-                    return line.trim();
-                }
-                currentIndex++;
-            }
-        }
 
-        scanner.close();
-        return null;
+            scanner.close();
+
+            if (wordCount == 0) {
+                return null;
+            }
+
+            Random random = new Random();
+            int randomWord = random.nextInt(wordCount);
+
+            scanner = new Scanner(wordBank);
+            foundHeader = false;
+            int currentIndex = 0;
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+
+                if (line.startsWith("-")) {
+                    if (foundHeader) {
+                        break;
+                    }
+                    if (line.equals(lengthHeader)) {
+                        foundHeader = true;
+                    }
+                }
+                else if (foundHeader && !line.trim().isEmpty()) {
+                    if (currentIndex == randomWord) {
+                        scanner.close();
+                        return line.trim();
+                    }
+                    currentIndex++;
+                }
+            }
+
+            scanner.close();
+            return null;
+
+        } catch (Exception e) { // Basic template error reporting format
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
     }
 }

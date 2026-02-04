@@ -1,7 +1,7 @@
 // Gameplay loop / reprompts logic assumed to live in main, likely makes more logical sense
 //
 
-public class GameLogic {
+public class  GameLogic {
 /*
  GameLogic
  * All of this is pending it actually working

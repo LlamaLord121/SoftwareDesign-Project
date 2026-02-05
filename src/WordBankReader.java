@@ -1,25 +1,24 @@
-import java.io.File;
+import java.io.InputStream;
 import java.util.Scanner;
 import java.util.Random;
-
-/**
- * Word bank is designed so thaa multiple internal banks of varying
- * word lengths can be chosen from. This is to allow for easy expansion
- * into a program that can pick from a variety of word lengths.
- *
- * Each "bank" has a header formatted as follows: -(word length)
- * ex: -5 would preface a 5 letter length section
- */
+import java.util.ArrayList;
 
 public class WordBankReader {
     public static String getWord(int letterCount) {
-        try { // Opening a file with scanner, wrapping it in a basic try/except block.
-            File wordBank = new File("Src/WordBank.txt");
-            Scanner scanner = new Scanner(wordBank);
+        try {
+            // Load from classpath (works in IDE, JAR, anywhere)
+            InputStream inputStream = WordBankReader.class.getResourceAsStream("/WordBank.txt");
+
+            if (inputStream == null) {
+                System.out.println("WordBank.txt not found");
+                return null;
+            }
+
+            Scanner scanner = new Scanner(inputStream);
 
             String lengthHeader = "-" + letterCount;
             boolean foundHeader = false;
-            int wordCount = 0;
+            ArrayList<String> words = new ArrayList<>();
 
             while(scanner.hasNextLine()) {
                 String currentLine = scanner.nextLine();
@@ -31,47 +30,20 @@ public class WordBankReader {
                         foundHeader = true;
                     }
                 } else if (foundHeader && !currentLine.trim().isEmpty()) {
-                    wordCount += 1;
+                    words.add(currentLine.trim());
                 }
             }
 
             scanner.close();
 
-            if (wordCount == 0) {
+            if (words.isEmpty()) {
                 return null;
             }
 
             Random random = new Random();
-            int randomWord = random.nextInt(wordCount);
+            return words.get(random.nextInt(words.size()));
 
-            scanner = new Scanner(wordBank);
-            foundHeader = false;
-            int currentIndex = 0;
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-
-                if (line.startsWith("-")) {
-                    if (foundHeader) {
-                        break;
-                    }
-                    if (line.equals(lengthHeader)) {
-                        foundHeader = true;
-                    }
-                }
-                else if (foundHeader && !line.trim().isEmpty()) {
-                    if (currentIndex == randomWord) {
-                        scanner.close();
-                        return line.trim();
-                    }
-                    currentIndex++;
-                }
-            }
-
-            scanner.close();
-            return null;
-
-        } catch (Exception e) { // Basic template error reporting format
+        } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
             return null;
         }

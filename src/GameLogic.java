@@ -31,9 +31,11 @@ public class  GameLogic {
         }
 
         public String toString() {
-            return "GuessResult{correctLetters=" + correctLetters
-                + ", correctPositions=" + correctPositions
-                + ", victory=" + victory + "}";
+            String output = "Correct Letter(s): " + correctLetters
+                    + "\nCorrect Letter(s) in Correct Position(s): "
+                    + correctPositions;
+
+            return output;
         }
     }
 
@@ -46,7 +48,7 @@ public class  GameLogic {
         return length;
     }
 
-    public String getgoalWord() {
+    public String getGoalWord() {
         return goalWord;
     }
 

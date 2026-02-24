@@ -12,8 +12,8 @@ public class KeyboardIO implements ActionListener {
 
     // Base key - standard size
     class GeneralKey extends JButton {
-        public GeneralKey(String label) {
-            super(label);
+        public GeneralKey(String key) {
+            super(key);
             setPreferredSize(new Dimension(45, 50));
             setOpaque(true);
         }
@@ -21,8 +21,8 @@ public class KeyboardIO implements ActionListener {
 
     // Custom key (Enter/Backspace) - can override width
     class CustomKey extends GeneralKey {
-        public CustomKey(String label, int width) {
-            super(label);
+        public CustomKey(String key, int width) {
+            super(key);
             setPreferredSize(new Dimension(width, 50));
         }
     }
@@ -44,11 +44,11 @@ public class KeyboardIO implements ActionListener {
 
         for (String row : rows) {
             JPanel rowPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 4, 4));
-            for (char c : row.toCharArray()) { // Build the interperitable array
-                GeneralKey button = new GeneralKey(String.valueOf(c));
+            for (char currentKey : row.toCharArray()) { // Build the interperitable array
+                GeneralKey button = new GeneralKey(String.valueOf(currentKey));
                 button.addActionListener(this);
                 rowPanel.add(button);
-                keyMap.put(String.valueOf(c), button);
+                keyMap.put(String.valueOf(currentKey), button);
             }
             keyboardPanel.add(rowPanel);
         }

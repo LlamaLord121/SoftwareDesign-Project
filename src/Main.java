@@ -1,8 +1,13 @@
+import Project2.KeyboardIO;
+
 /*
 
  */
 public class Main {
     public static void main(String[] args) {
+        KeyboardIO keyboard = new KeyboardIO();
+        keyboard.go();
+
         TerminalIO.output("--- Welcome to Cole and Kane's basic word game ---");
         while (true) {
             boolean gameResult = gameplayLoop(5, 0);

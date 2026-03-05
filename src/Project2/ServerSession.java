@@ -20,7 +20,6 @@ public class ServerSession {
                 Socket s = socket;
                 BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
                 PrintWriter out = new PrintWriter(new OutputStreamWriter(s.getOutputStream()), true)
-                //autoflush for simplicity
         ) {
             out.println("Welcome to Fake Wordle\nRight click to disable (eliminated) keys, repeat to re-enable.");
             if (!startNewGame(out)) return;
@@ -54,6 +53,7 @@ public class ServerSession {
         String guess = guessRaw.toLowerCase();
 
         //flexible to potential changes to WORDLEN
+
         if (guess.length() != WORDLEN) {
             out.println("Error - Your guess must be " + WORDLEN + " letters long");
             return;

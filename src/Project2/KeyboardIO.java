@@ -57,7 +57,6 @@ public class KeyboardIO implements ActionListener {
         }
     }
 
-    // Call this from anywhere to push a new line into the scrolling box
     public void logMessage(String message) {
         if (guessLog.getDocument().getLength() == 0) {
             guessLog.append(message);
@@ -118,7 +117,7 @@ public class KeyboardIO implements ActionListener {
             mainPanel.add(rowPanel);
         }
 
-        // Enter and Backspace on their own row, initialized separately so they can't be locked or colored
+        // Enter and Backspace
 
         JPanel actionRow = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
         actionRow.setMaximumSize(new Dimension(640, 59));
@@ -172,7 +171,6 @@ public class KeyboardIO implements ActionListener {
         wordDisplay.setText(currentWord);
     }
 
-    // Use to color the keys when they get locked
     public void colorKey(String letter, Color color) {
         if (keyMap.containsKey(letter)) {
             keyMap.get(letter).setBackground(color);

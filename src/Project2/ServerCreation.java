@@ -19,7 +19,7 @@ public class ServerCreation {
                 System.out.println("Server error: " + e.getMessage());
             }
         });
-        serverThread.setDaemon(true); // Close program if the UI is closed (instead of lettingg it run forever)
+        serverThread.setDaemon(true);
         serverThread.start();
     }
 }

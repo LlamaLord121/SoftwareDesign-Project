@@ -8,7 +8,6 @@ import java.util.Scanner;
 public class WordBankReader {
     public static String getWord(int letterCount) {
         try {
-            //changed from earlier WordBankReader to attempt to help with some read errors. May not be entirely needed
             InputStream inputStream = WordBankReader.class.getResourceAsStream("/Project2/WordBank.txt");
 
             if (inputStream == null) {

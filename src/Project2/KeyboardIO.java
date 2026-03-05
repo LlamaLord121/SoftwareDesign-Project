@@ -20,7 +20,7 @@ public class KeyboardIO implements ActionListener {
     class GeneralKey extends JButton {
         public GeneralKey(String label) {
             super(label);
-            setPreferredSize(new Dimension(45, 50));
+            setPreferredSize(new Dimension(55, 55));
             setOpaque(true);
         }
     }
@@ -32,11 +32,6 @@ public class KeyboardIO implements ActionListener {
             super(label);
             setPreferredSize(new Dimension(width, 50));
         }
-    }
-
-    public static void main(String[] args) {
-        KeyboardIO keyboard = new KeyboardIO();
-        keyboard.go();
     }
 
     // Call this from anywhere to push a new line into the scrolling box
@@ -52,7 +47,7 @@ public class KeyboardIO implements ActionListener {
     public void go() {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
+        frame.setSize(640, 500);
         frame.setResizable(false);
 
         JPanel mainPanel = new JPanel();
@@ -67,8 +62,8 @@ public class KeyboardIO implements ActionListener {
         guessLog.setWrapStyleWord(true);
 
         JScrollPane scrollPane = new JScrollPane(guessLog);
-        scrollPane.setMaximumSize(new Dimension(500, 160));
-        scrollPane.setPreferredSize(new Dimension(500, 160));
+        scrollPane.setMaximumSize(new Dimension(640, 160));
+        scrollPane.setPreferredSize(new Dimension(640, 160));
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(scrollPane);
@@ -77,8 +72,8 @@ public class KeyboardIO implements ActionListener {
 
         wordDisplay = new JLabel("", SwingConstants.CENTER);
         wordDisplay.setFont(new Font("Arial", Font.BOLD, 32));
-        wordDisplay.setMaximumSize(new Dimension(500, 60));
-        wordDisplay.setPreferredSize(new Dimension(500, 60));
+        wordDisplay.setMaximumSize(new Dimension(640, 60));
+        wordDisplay.setPreferredSize(new Dimension(640, 60));
         wordDisplay.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         wordDisplay.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(wordDisplay);
@@ -89,7 +84,7 @@ public class KeyboardIO implements ActionListener {
 
         for (String row : rows) {
             JPanel rowPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
-            rowPanel.setMaximumSize(new Dimension(500, 54));
+            rowPanel.setMaximumSize(new Dimension(640, 59));
             rowPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
             for (char c : row.toCharArray()) { // Build the keyboard button array
                 GeneralKey btn = new GeneralKey(String.valueOf(c));
@@ -103,13 +98,13 @@ public class KeyboardIO implements ActionListener {
         // Enter and Backspace on their own row, initialized separately so they can't be locked or colored
 
         JPanel actionRow = new JPanel(new FlowLayout(FlowLayout.CENTER, 2, 2));
-        actionRow.setMaximumSize(new Dimension(500, 54));
+        actionRow.setMaximumSize(new Dimension(640, 59));
         actionRow.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        CustomKey enterBtn = new CustomKey("ENTER", 90); // 2x normal width
+        CustomKey enterBtn = new CustomKey("ENTER", 110);
         enterBtn.addActionListener(this);
 
-        CustomKey backBtn = new CustomKey("⌫", 55);
+        CustomKey backBtn = new CustomKey("⌫", 70);
         backBtn.addActionListener(this);
 
         actionRow.add(enterBtn);
@@ -125,7 +120,7 @@ public class KeyboardIO implements ActionListener {
             logMessage("Connected to server");
         } catch (Exception e) {
             logMessage("Could not connect to server");
-}
+        }
     }
 
     public void actionPerformed(ActionEvent event) {

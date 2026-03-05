@@ -8,19 +8,18 @@ public class ServerCreation {
 
     public static final int LOCALPORT = 5000;
 
-    public static void main(String[] args) {
-        System.out.println("Server starting locally");
-
-        try (ServerSocket serverSocket = new ServerSocket(LOCALPORT)) {
-            while (true) {
+    public static void start() {
+        Thread serverThread = new Thread(() -> {
+            try (ServerSocket serverSocket = new ServerSocket(LOCALPORT)) {
+                System.out.println("Server started on port " + LOCALPORT);
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Client connected: " + clientSocket.getRemoteSocketAddress());
-
-                ServerSession session = new ServerSession(clientSocket);
-                session.run();
+                new ServerSession(clientSocket).run();
+            } catch (IOException e) {
+                System.out.println("Server error: " + e.getMessage());
             }
-        } catch (IOException e) {
-            System.out.println("Server error: " + e.getMessage());
-        }
+        });
+        serverThread.setDaemon(true); // Close program if the UI is closed (instead of lettingg it run forever)
+        serverThread.start();
     }
 }

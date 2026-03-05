@@ -1,4 +1,4 @@
-package Project2; 
+package Project2;
 
 public class  GameLogic {
 
@@ -27,13 +27,13 @@ public class  GameLogic {
 
     public GameLogic(int letterCount) {
         String w = WordBankReader.getWord(letterCount);
-        if (w == null) {
-            w = "error";
-        }
-        this.goalWord = w.toLowerCase();
+        this.goalWord = (w != null) ? w.toLowerCase() : null;
         this.length = letterCount;
-}
+    }
 
+    public boolean isReady() {
+        return goalWord != null;
+    }
     public int getWordLength() {
         return length;
     }
@@ -54,7 +54,7 @@ public class  GameLogic {
             if (g == t) {
                 matched[i] = true;
                 correctPositions++;
-            } 
+            }
             else {
                 int idx = t - 'a';
                 if (idx >= 0 && idx < 26) {
@@ -63,18 +63,18 @@ public class  GameLogic {
             }
         }
 
-    int inWordButWrongPos = 0;
-      
-    for (int i = 0; i < length; i++) {
-        if (!matched[i]) {
-        char g = guess.charAt(i);
-        int idx = g - 'a';
-        if (idx >= 0 && idx < 26 && freq[idx] > 0) {
-            inWordButWrongPos++;
-            freq[idx]--;
+        int inWordButWrongPos = 0;
+
+        for (int i = 0; i < length; i++) {
+            if (!matched[i]) {
+                char g = guess.charAt(i);
+                int idx = g - 'a';
+                if (idx >= 0 && idx < 26 && freq[idx] > 0) {
+                    inWordButWrongPos++;
+                    freq[idx]--;
+                }
+            }
         }
-    }
-}
 
         int correctLetters = correctPositions + inWordButWrongPos;
         boolean victory = correctPositions == length;
